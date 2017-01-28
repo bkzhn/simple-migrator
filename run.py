@@ -39,5 +39,14 @@ def get_columns(connection, table):
     }
 
 
+def dump_to_json(tables):
+    """Function to dump db structure to json."""
+    import json
+
+    with open('db.json', 'wb') as f:
+        j = json.dumps(tables, f, indent=2)
+        f.write(bytes(j, 'UTF-8'))
+
+
 if __name__ == '__main__':
     print('== Simple Migrator ==')
