@@ -26,12 +26,17 @@ def get_columns(connection, table):
 
     for row in result:
         column_name = row[0]
-        column_type = row[1].split('(')
-        column_type = column_type[0]
+        column_type_and_size = row[1].split('(')
+        column_type = column_type_and_size[0]
+        column_size = None
+
+        if len(column_type_and_size) > 1:
+            column_size = column_type_and_size[1].split(')')[0]
 
         column = {
             'name': column_name,
-            'type': column_type
+            'type': column_type,
+            'size': column_size
         }
 
         columns.append(column)
