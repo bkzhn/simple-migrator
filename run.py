@@ -1,4 +1,6 @@
 """Simple Migrator."""
+from sqlalchemy import create_engine
+
 __author__ = 'bkzhn'
 
 connection_string = 'mysql+pymysql://root:1234@localhost/test'
@@ -50,3 +52,15 @@ def dump_to_json(tables):
 
 if __name__ == '__main__':
     print('== Simple Migrator ==')
+
+    engine = create_engine(connection_string)
+
+    tables = get_tables(engine)
+    result = list()
+
+    for t in tables:
+        result.append(get_columns(engine, t))
+
+    dump_to_json(result)
+
+    print('== END ==')
