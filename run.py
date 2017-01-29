@@ -29,6 +29,10 @@ def get_columns(connection, table):
         column_type_and_size = row[1].split('(')
         column_type = column_type_and_size[0]
         column_size = None
+        column_is_nullable = False
+
+        if row[2] == 'YES':
+            column_is_nullable = True
 
         if len(column_type_and_size) > 1:
             column_size = column_type_and_size[1].split(')')[0]
@@ -36,7 +40,8 @@ def get_columns(connection, table):
         column = {
             'name': column_name,
             'type': column_type,
-            'size': column_size
+            'size': column_size,
+            'is_nullable': column_is_nullable
         }
 
         columns.append(column)
